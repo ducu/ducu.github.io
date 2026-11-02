@@ -116,9 +116,10 @@
   }
   .title {
     font-family: var(--font-display); font-variation-settings: 'opsz' 18;
-    font-weight: 500; font-style: italic;
+    font-weight: 500;
     font-size: 2.1rem; line-height: 1.05; margin: 0;
   }
+  .title span { font-style: italic; }
   .desc { grid-column: 1; font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); margin: 4px 0 0; }
   .meta {
     grid-column: 1;
@@ -223,7 +224,7 @@
         <span class="lock">🔒 Pentru familie</span>
       </div>
       <div class="body">
-        <h2 class="title">Momente</h2>
+        <h2 class="title">📸 <span>Momente</span></h2>
         <p class="desc">Fotografiile mele de pe Facebook și Instagram, pe ani.</p>
         <p class="meta">{{MOMENTE_META}}</p>
         <span class="go" aria-hidden="true">→</span>
@@ -233,7 +234,7 @@
     <a class="card" href="https://ducu.github.io/rafturi/">
       <div class="preview"><div class="shelf">{{COVERS}}</div></div>
       <div class="body">
-        <h2 class="title">Rafturi</h2>
+        <h2 class="title">📚 <span>Rafturi</span></h2>
         <p class="desc">Ce citesc și ce am citit, cu recenziile mele.</p>
         <p class="meta">{{RAFTURI_META}}</p>
         <span class="go" aria-hidden="true">→</span>
@@ -245,7 +246,7 @@
         <div class="quote"><blockquote><mark id="q-text"></mark></blockquote><cite id="q-source"></cite></div>
       </div>
       <div class="body">
-        <h2 class="title">Sublinieri</h2>
+        <h2 class="title">✍🏻 <span>Sublinieri</span></h2>
         <p class="desc">Citate din cărți, subliniate de-a lungul anilor.</p>
         <p class="meta">{{SUBLINIERI_META}}</p>
         <span class="go" aria-hidden="true">→</span>
