@@ -187,6 +187,23 @@
   }
   .quote cite { font-style: normal; font-size: 13px; color: var(--ink-faint); margin-top: 12px; }
 
+  /* Trepte: one step per year, rising left to right. */
+  .steps {
+    position: absolute; inset: 0;
+    display: flex; align-items: flex-end; gap: 4px;
+    padding: 22px 22px 0;
+  }
+  .steps span {
+    flex: 1; min-width: 0;
+    display: flex; justify-content: center; padding-top: 8px;
+    border-radius: 4px 4px 0 0;
+    background: color-mix(in srgb, var(--accent-soft) var(--tint), var(--rule));
+    font-family: var(--font-display); font-variation-settings: 'opsz' 18; font-style: italic;
+    font-size: 15px; color: var(--ink); font-variant-numeric: lining-nums;
+    transition: transform 0.25s;
+  }
+  .card:hover .steps span { transform: translateY(-6px); }
+
   footer { margin-top: 36px; font-size: 13px; color: var(--ink-faint); }
   footer a { color: inherit; }
 
@@ -198,9 +215,11 @@
     .preview:has(.quote) { height: auto; min-height: 180px; display: flex; }
     .quote { position: relative; padding: 28px 24px; }
     .quote blockquote { font-size: 1.15rem; }
+    .steps { gap: 2px; padding: 18px 16px 0; }
+    .steps span { font-size: 11px; padding-top: 6px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .card, .shelf img, .mosaic { transition: none; }
+    .card, .shelf img, .mosaic, .steps span { transition: none; }
     .card:hover { transform: none; }
   }
 </style>
@@ -225,7 +244,7 @@
       <div class="body">
         <h2 class="title">📸 <span>Momente</span></h2>
         <p class="desc">Fotografiile mele de pe Facebook și Instagram, pe ani.</p>
-        <p class="meta">3.647 fotografii · 2007–2026</p>
+        <p class="meta">3.651 fotografii · 2007–2026</p>
         <span class="go" aria-hidden="true">→</span>
       </div>
     </a>
@@ -248,6 +267,16 @@
         <h2 class="title">✍🏻 <span>Sublinieri</span></h2>
         <p class="desc">Citate din cărți, subliniate de-a lungul anilor.</p>
         <p class="meta">59 de citate și note</p>
+        <span class="go" aria-hidden="true">→</span>
+      </div>
+    </a>
+
+    <a class="card wide" href="https://ducu.github.io/trepte/">
+      <div class="preview"><div class="steps"><span style="height:24%;--tint:25%">2016</span><span style="height:31%;--tint:31%">2017</span><span style="height:38%;--tint:37%">2018</span><span style="height:45%;--tint:43%">2019</span><span style="height:52%;--tint:49%">2020</span><span style="height:59%;--tint:55%">2021</span><span style="height:66%;--tint:61%">2022</span><span style="height:73%;--tint:67%">2023</span><span style="height:80%;--tint:73%">2024</span><span style="height:87%;--tint:79%">2025</span><span style="height:94%;--tint:85%">2026</span></div></div>
+      <div class="body">
+        <h2 class="title">🪜 <span>Trepte</span></h2>
+        <p class="desc">Zece ani de lecturi și recenzii: ce am citit, cum am scris și la ce a folosit totul.</p>
+        <p class="meta">11 trepte · 138 de cărți · 109 de recenzii</p>
         <span class="go" aria-hidden="true">→</span>
       </div>
     </a>

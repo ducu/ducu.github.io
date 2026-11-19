@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the homepage: template.html + previews read from the sibling projects -> index.html.
 
-Expects momente/, rafturi/ and sublinieri/ next to this folder (as in ~/Life).
+Expects momente/, rafturi/, sublinieri/ and trepte/ next to this folder (as in ~/Life).
 Usage: python3 build.py
 """
 import glob
@@ -71,17 +71,33 @@ def sublinieri():
     return json.dumps(quotes, ensure_ascii=False), f'{len(files)} de citate și note'
 
 
+def trepte():
+    data = json.load(open(os.path.join(LIFE, 'rafturi', 'data', 'books.json'), encoding='utf-8'))
+    by_id = {b['book_id']: b for b in data['read']}
+    years = sorted(data['years'])
+    books = [by_id[i] for y in years for i in data['years'][y] if i in by_id]
+    reviews = sum(1 for b in books if (b['user_review'] or '').strip())
+    # one step per year, each a bit higher and a bit more tinted than the last
+    steps = []
+    for i, y in enumerate(years):
+        k = i / max(len(years) - 1, 1)
+        steps.append(f'<span style="height:{24 + 70 * k:.0f}%;--tint:{25 + 60 * k:.0f}%">{y}</span>')
+    return ''.join(steps), f'{len(years)} trepte · {len(books)} de cărți · {reviews} de recenzii'
+
+
 def main():
     momente_meta = momente()
     covers, rafturi_meta = rafturi()
     quotes, sublinieri_meta = sublinieri()
+    steps, trepte_meta = trepte()
     page = open(os.path.join(ROOT, 'template.html'), encoding='utf-8').read()
     for key, value in {'MOMENTE_META': momente_meta,
                        'COVERS': covers, 'RAFTURI_META': rafturi_meta,
-                       'QUOTES': quotes, 'SUBLINIERI_META': sublinieri_meta}.items():
+                       'QUOTES': quotes, 'SUBLINIERI_META': sublinieri_meta,
+                       'STEPS': steps, 'TREPTE_META': trepte_meta}.items():
         page = page.replace('{{' + key + '}}', value)
     open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(page)
-    print(f'index.html: {momente_meta}; {rafturi_meta}; {sublinieri_meta}')
+    print(f'index.html: {momente_meta}; {rafturi_meta}; {sublinieri_meta}; {trepte_meta}')
 
 
 if __name__ == '__main__':
