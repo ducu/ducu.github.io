@@ -46,7 +46,7 @@ def momente():
         mosaic.paste(tile, ((i % COLS) * pitch, (i // COLS) * pitch))
     mosaic.save(os.path.join(ROOT, 'mosaic.webp'), quality=80)
     first, last = photos[0]['date'][:4], photos[-1]['date'][:4]
-    return count(len(photos), 'fotografii') + f' · {first}–{last}'
+    return f'{first}–{last} · ' + count(len(photos), 'fotografii')
 
 
 def rafturi():
