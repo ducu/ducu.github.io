@@ -25,6 +25,12 @@ COVERS = 7
 QUOTE_WORDS = 32
 
 
+def count(n, word):
+    """'19 cărți', '20 de cărți', '109 cărți', '138 de cărți': Romanian puts 'de' after numbers ending in 20-99 or 00."""
+    s = f'{n:,}'.replace(',', '.')
+    return f'{s} de {word}' if n % 100 >= 20 or (n and n % 100 == 0) else f'{s} {word}'
+
+
 def momente():
     photos = json.load(open(os.path.join(LIFE, 'momente', 'data', 'photos.json'), encoding='utf-8'))
     photos = sorted((p for p in photos if not p.get('hidden') and not p.get('story')), key=lambda p: p['date'])
@@ -40,7 +46,7 @@ def momente():
         mosaic.paste(tile, ((i % COLS) * pitch, (i // COLS) * pitch))
     mosaic.save(os.path.join(ROOT, 'mosaic.webp'), quality=80)
     first, last = photos[0]['date'][:4], photos[-1]['date'][:4]
-    return f'{len(photos):,}'.replace(',', '.') + f' fotografii · {first}–{last}'
+    return count(len(photos), 'fotografii') + f' · {first}–{last}'
 
 
 def rafturi():
@@ -55,7 +61,7 @@ def rafturi():
         if os.path.exists(src):
             shutil.copy(src, out)
             imgs.append(f'<img src="covers/{b["book_id"]}.jpg" alt="{html.escape(b["title"])}" loading="lazy">')
-    return ''.join(imgs), f'{len(data["read"])} de cărți citite · {len(data["currently"])} în curs'
+    return ''.join(imgs), count(len(data['read']), 'cărți citite') + f' · {len(data["currently"])} în curs'
 
 
 def sublinieri():
@@ -68,7 +74,7 @@ def sublinieri():
         if meta.get('kind', 'quote') == 'quote' and meta.get('style') != 'dialogue' \
                 and body and len(body.split()) <= QUOTE_WORDS:
             quotes.append({'text': body, 'source': meta['source'].split(',')[0]})
-    return json.dumps(quotes, ensure_ascii=False), f'{len(files)} de citate și note'
+    return json.dumps(quotes, ensure_ascii=False), count(len(files), 'citate și note')
 
 
 def trepte():
@@ -82,7 +88,7 @@ def trepte():
     for i, y in enumerate(years):
         k = i / max(len(years) - 1, 1)
         steps.append(f'<span style="height:{24 + 70 * k:.0f}%;--tint:{25 + 60 * k:.0f}%">{y}</span>')
-    return ''.join(steps), f'{years[0]}–{years[-1]} · {len(books)} de cărți · {reviews} de recenzii'
+    return ''.join(steps), f'{years[0]}–{years[-1]} · ' + count(len(books), 'cărți') + ' · ' + count(reviews, 'recenzii')
 
 
 def main():
