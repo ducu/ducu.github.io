@@ -82,7 +82,7 @@ def trepte():
     for i, y in enumerate(years):
         k = i / max(len(years) - 1, 1)
         steps.append(f'<span style="height:{24 + 70 * k:.0f}%;--tint:{25 + 60 * k:.0f}%">{y}</span>')
-    return ''.join(steps), f'{len(years)} trepte · {len(books)} de cărți · {reviews} de recenzii'
+    return ''.join(steps), f'{years[0]}–{years[-1]} · {len(books)} de cărți · {reviews} de recenzii'
 
 
 def main():
