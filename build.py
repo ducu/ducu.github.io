@@ -83,24 +83,24 @@ def trepte():
     years = sorted(data['years'])
     books = [by_id[i] for y in years for i in data['years'][y] if i in by_id]
     reviews = sum(1 for b in books if (b['user_review'] or '').strip())
-    # one step per year, each a bit higher and a bit more tinted than the last
-    steps = []
-    for i, y in enumerate(years):
-        k = i / max(len(years) - 1, 1)
-        steps.append(f'<span style="height:{24 + 70 * k:.0f}%;--tint:{25 + 60 * k:.0f}%">{y}</span>')
-    return ''.join(steps), f'{years[0]}–{years[-1]} · ' + count(len(books), 'cărți') + ' · ' + count(reviews, 'recenzii')
+    # the three stages, read from the summary list on the Trepte page itself
+    page = open(os.path.join(LIFE, 'trepte', 'template.html'), encoding='utf-8').read()
+    stages = re.findall(r'<li><span class="yr">(.*?)</span><p><b>(.*?)\.</b> (.*?)</p></li>', page)
+    line = ''.join(f'<li><span class="yr">{y}</span><p><b>{name}</b><span class="q">{text}</span></p></li>'
+                   for y, name, text in stages)
+    return line, f'{years[0]}–{years[-1]} · ' + count(len(books), 'cărți') + ' · ' + count(reviews, 'recenzii')
 
 
 def main():
     momente_meta = momente()
     covers, rafturi_meta = rafturi()
     quotes, sublinieri_meta = sublinieri()
-    steps, trepte_meta = trepte()
+    stages, trepte_meta = trepte()
     page = open(os.path.join(ROOT, 'template.html'), encoding='utf-8').read()
     for key, value in {'MOMENTE_META': momente_meta,
                        'COVERS': covers, 'RAFTURI_META': rafturi_meta,
                        'QUOTES': quotes, 'SUBLINIERI_META': sublinieri_meta,
-                       'STEPS': steps, 'TREPTE_META': trepte_meta}.items():
+                       'STAGES': stages, 'TREPTE_META': trepte_meta}.items():
         page = page.replace('{{' + key + '}}', value)
     open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(page)
     print(f'index.html: {momente_meta}; {rafturi_meta}; {sublinieri_meta}; {trepte_meta}')

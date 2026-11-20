@@ -187,22 +187,24 @@
   }
   .quote cite { font-style: normal; font-size: 13px; color: var(--ink-faint); margin-top: 12px; }
 
-  /* Trepte: one step per year, rising left to right. */
-  .steps {
-    position: absolute; inset: 0;
-    display: flex; align-items: flex-end; gap: 4px;
-    padding: 22px 22px 0;
+  /* Trepte: the three stages of the page, with their years. */
+  .stages {
+    position: absolute; inset: 0; margin: 0; padding: 20px 28px;
+    list-style: none;
+    display: grid; grid-template-columns: max-content 1fr;
+    column-gap: 18px; align-content: center; row-gap: 10px;
   }
-  .steps span {
-    flex: 1; min-width: 0;
-    display: flex; justify-content: center; padding-top: 8px;
-    border-radius: 4px 4px 0 0;
-    background: color-mix(in srgb, var(--accent-soft) var(--tint), var(--rule));
-    font-family: var(--font-display); font-variation-settings: 'opsz' 18; font-style: italic;
-    font-size: 15px; color: var(--ink); font-variant-numeric: lining-nums;
-    transition: transform 0.25s;
+  .stages li { display: contents; }
+  .stages .yr {
+    font-family: var(--font-display); font-style: italic; font-size: 15px;
+    color: var(--accent); font-variant-numeric: lining-nums; line-height: 1.9rem;
   }
-  .card:hover .steps span { transform: translateY(-6px); }
+  .stages p { margin: 0; min-width: 0; line-height: 1.9rem; }
+  .stages b {
+    font-family: var(--font-display); font-style: italic; font-weight: 400;
+    font-size: 1.3rem; color: var(--ink); margin-right: 10px;
+  }
+  .stages span.q { font-size: 14px; color: var(--ink-soft); }
 
   footer { margin-top: 36px; font-size: 13px; color: var(--ink-faint); }
   footer a { color: inherit; }
@@ -215,11 +217,12 @@
     .preview:has(.quote) { height: auto; min-height: 180px; display: flex; }
     .quote { position: relative; padding: 28px 24px; }
     .quote blockquote { font-size: 1.15rem; }
-    .steps { gap: 2px; padding: 18px 16px 0; }
-    .steps span { font-size: 11px; padding-top: 6px; }
+    .stages { padding: 20px 22px; column-gap: 14px; row-gap: 8px; }
+    .stages b { font-size: 1.15rem; }
+    .stages span.q { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .card, .shelf img, .mosaic, .steps span { transition: none; }
+    .card, .shelf img, .mosaic { transition: none; }
     .card:hover { transform: none; }
   }
 </style>
@@ -272,7 +275,7 @@
     </a>
 
     <a class="card wide" href="https://ducu.github.io/trepte/">
-      <div class="preview"><div class="steps"><span style="height:24%;--tint:25%">2016</span><span style="height:31%;--tint:31%">2017</span><span style="height:38%;--tint:37%">2018</span><span style="height:45%;--tint:43%">2019</span><span style="height:52%;--tint:49%">2020</span><span style="height:59%;--tint:55%">2021</span><span style="height:66%;--tint:61%">2022</span><span style="height:73%;--tint:67%">2023</span><span style="height:80%;--tint:73%">2024</span><span style="height:87%;--tint:79%">2025</span><span style="height:94%;--tint:85%">2026</span></div></div>
+      <div class="preview"><ol class="stages"><li><span class="yr">2016–2018</span><p><b>Filosofia morală</b><span class="q">Întâi întrebarea ce este binele.</span></p></li><li><span class="yr">2019–2024</span><p><b>Romanul ca laborator moral</b><span class="q">Apoi, pe la ruși, întrebarea de unde vine răul.</span></p></li><li><span class="yr">2023–2026</span><p><b>Politica și istoria</b><span class="q">De aici, eseuri împotriva a ceea ce îl hrănește: resentimentul, minciuna și nepăsarea, prostia.</span></p></li></ol></div>
       <div class="body">
         <h2 class="title">🪜 <span>Trepte</span></h2>
         <p class="desc">Zece ani de lecturi și recenzii: ce am citit, cum am scris și la ce a folosit totul.</p>
